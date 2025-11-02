@@ -1,6 +1,9 @@
 import test, { expect } from "@playwright/test";
+import dotenv from "dotenv";
 import { beforeEach } from "node:test";
 import users from "./data/login.js";
+
+dotenv.config();
 
 test.describe("Authentication tests", { tag: "@autehntication" }, () => {
   test.beforeEach(async ({ page }) => {
@@ -9,13 +12,14 @@ test.describe("Authentication tests", { tag: "@autehntication" }, () => {
     });
   });
 
+  // test using dotenv credentials
   test("Successful login", async ({ page }) => {
     await page
       .getByRole("textbox", { name: "Type your username" })
-      .fill(users.validUser.username);
+      .fill(process.env.VALID_USERNAME);
     await page
       .getByRole("textbox", { name: "Type your password" })
-      .fill(users.validUser.password);
+      .fill(process.env.VALID_PASSWORD);
     await page.getByRole("button", { name: "Login" }).click();
     await expect(page.getByText("User successfully logged in!")).toBeVisible();
   });
