@@ -8,7 +8,7 @@ dotenv.config();
 test.describe("Authentication tests", { tag: "@autehntication" }, () => {
   test.beforeEach(async ({ page }) => {
     await test.step("Navigate to login page", async () => {
-      await page.goto(process.env.BASE_URL + "login");
+      await page.goto(process.env.BASE_URL + "/login");
     });
   });
 
