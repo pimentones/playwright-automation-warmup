@@ -13,7 +13,7 @@ for (const user of USERS) {
     await form.selectCountry(user.countryValue);
     await form.selectGender(user.gender);
     await form.selectHobby(user.hobbies);
-    await form.sendButton.click();
+    await form.submitForm();
     await form.expectSuccessMessage();
   });
 }

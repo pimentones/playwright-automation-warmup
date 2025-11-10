@@ -37,7 +37,7 @@ export class FormPage {
   }
 
   async fillName(userName) {
-    await this.nameInput.fill(userName);
+    await this.nameInput.fill(login);
   }
 
   async fillEmail(userEmail) {
