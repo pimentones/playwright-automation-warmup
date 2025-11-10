@@ -1,6 +1,6 @@
-import test from "@playwright/test";
-import { FormPage } from "./pages/form.page";
-import { USERS } from "./data/form.data.js";
+import { test } from "@playwright/test";
+import { FormPage } from "../pages/form.page.js";
+import { USERS } from "../data/form.data.js";
 
 for (const user of USERS) {
   test("Form filling " + user.name, async ({ page }) => {
@@ -11,5 +11,9 @@ for (const user of USERS) {
     await form.fillEmail(user.email);
     await form.fillPassword(user.password);
     await form.selectCountry(user.countryValue);
+    await form.selectGender(user.gender);
+    await form.selectHobby(user.hobbies);
+    await form.sendButton.click();
+    await form.expectSuccessMessage();
   });
 }

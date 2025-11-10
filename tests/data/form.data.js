@@ -75,3 +75,12 @@ export const ERROR_MESSAGES = {
   country: "The country field is required.",
   gender: "The gender field is required.",
 };
+
+export const FORM_LABELS = {
+  header: "Form",
+  nameInput: "Name *",
+  emailInput: "Email *",
+  passwordInput: "Password *",
+  countrySelect: "Country *",
+  sendButton: "Send",
+};
