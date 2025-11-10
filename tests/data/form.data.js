@@ -30,8 +30,8 @@ export const USERS = [
   },
   {
     scenario: "Multiple Hobbies",
-    name: "Rafa Costa",
-    email: "rafa.costa@example.com",
+    name: "Ze Costa",
+    email: "ze.costa@example.com",
     password: "Rafa#1234",
     countryLabel: "Canada",
     countryValue: "canada",
