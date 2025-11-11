@@ -9,13 +9,13 @@ test.describe("Menu navigation tests", { tag: "@navigation" }, () => {
   test.beforeEach(async ({ page }) => {
     await test.step("Navigate to login page", async () => {
       await page.goto(process.env.BASE_URL + "/login");
-      const login = new MenuPage(page);
     });
   });
 
   test("Navigate to the different website pages", async ({ page }) => {
     await test.step("Navigate to Home page", async () => {
       const menu = new MenuPage(page);
+
       await menu.navigateToHome();
       await menu.expectHomePageIntro();
       await menu.navigateToLogin();

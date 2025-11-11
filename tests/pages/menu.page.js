@@ -1,4 +1,4 @@
-import { expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import {
   MENU_LINKS,
   PAGE_ELEMENT_TEXTS,
@@ -28,58 +28,86 @@ export class MenuPage {
   }
 
   async navigateToHome() {
-    await this.homeLink.click();
+    await test.step("Navigate to home page", async () => {
+      await this.homeLink.click();
+    });
   }
 
   async navigateToLogin() {
-    await this.loginLink.click();
+    await test.step("Navigate to login page", async () => {
+      await this.loginLink.click();
+    });
   }
 
   async navigateToForm() {
-    await this.formLink.click();
+    await test.step("Navigate to form page", async () => {
+      await this.formLink.click();
+    });
   }
 
   async navigateToTable() {
-    await this.tableLink.click();
+    await test.step("Navigate to table page", async () => {
+      await this.tableLink.click();
+    });
   }
 
   async navigateToTasks() {
-    await this.tasksLink.click();
+    await test.step("Navigate to tasks page", async () => {
+      await this.tasksLink.click();
+    });
   }
 
   async navigateToStore() {
-    await this.storeLink.click();
+    await test.step("Navigate to store page", async () => {
+      await this.storeLink.click();
+    });
   }
 
   async navigateToAbout() {
-    await this.aboutLink.click();
+    await test.step("Navigate to about page", async () => {
+      await this.aboutLink.click();
+    });
   }
 
   async expectHomePageIntro() {
-    await expect(this.homePageElement).toBeVisible();
+    await test.step("Check home page intro is visible", async () => {
+      await expect(this.homePageElement).toBeVisible();
+    });
   }
 
   async expectLoginPageIntro() {
-    await expect(this.loginPageElement).toBeVisible();
+    await test.step("Check login page intro is visible", async () => {
+      await expect(this.loginPageElement).toBeVisible();
+    });
   }
 
   async expectFormPageIntro() {
-    await expect(this.formPageElement).toBeVisible();
+    await test.step("Check form page intro is visible", async () => {
+      await expect(this.formPageElement).toBeVisible();
+    });
   }
 
   async expectTablePageIntro() {
-    await expect(this.tablePageElement).toBeVisible();
+    await test.step("Check table page intro is visible", async () => {
+      await expect(this.tablePageElement).toBeVisible();
+    });
   }
 
   async expectTasksPageIntro() {
-    await expect(this.tasksPageElement).toBeVisible();
+    await test.step("Check tasks page intro is visible", async () => {
+      await expect(this.tasksPageElement).toBeVisible();
+    });
   }
 
   async expectStorePageIntro() {
-    await expect(this.storePageElement).toBeVisible();
+    await test.step("Check store page intro is visible", async () => {
+      await expect(this.storePageElement).toBeVisible();
+    });
   }
 
   async expectAboutPageIntro() {
-    await expect(this.storePageElement).toBeVisible();
+    await test.step("Check about page intro is visible", async () => {
+      await expect(this.storePageElement).toBeVisible();
+    });
   }
 }

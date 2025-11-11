@@ -1,4 +1,4 @@
-import { expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { ERROR_MESSAGES, FORM_LABELS, FORM_MESSAGES } from "../data/form.data";
 
 export class FormPage {
@@ -37,39 +37,65 @@ export class FormPage {
   }
 
   async fillName(userName) {
-    await this.nameInput.fill(userName);
+    await test.step("Fill username: ${userName}", async () => {
+      await this.nameInput.fill(userName);
+    });
   }
 
   async fillEmail(userEmail) {
-    await this.emailInput.fill(userEmail);
+    await test.step("Fill email", async () => {
+      await this.emailInput.fill(userEmail);
+    });
   }
 
   async fillPassword(userPassword) {
-    await this.passwordInput.fill(userPassword);
+    await test.step("Fill password", async () => {
+      await this.passwordInput.fill(userPassword);
+    });
   }
 
   async selectCountry(userCountry) {
-    await this.countrySelect.selectOption(userCountry);
+    await test.step("Fill country", async () => {
+      await this.countrySelect.selectOption(userCountry);
+    });
   }
 
   async selectGender(userGender) {
-    await this.genderCheck(userGender).check();
+    await test.step("Select gender", async () => {
+      await this.genderCheck(userGender).check();
+    });
   }
 
   async selectHobby(userHobbies) {
-    if (userHobbies.length > 0) {
-      for (const hobby of userHobbies) {
-        await this.hobbyCheck(hobby).check();
+    await test.step("Select hobbies", async () => {
+      if (userHobbies.length > 0) {
+        for (const hobby of userHobbies) {
+          await this.hobbyCheck(hobby).check();
+        }
       }
-    }
+    });
   }
 
   async submitForm() {
-    await this.sendButton.click();
+    await test.step("Submit form", async () => {
+      await this.sendButton.click();
+    });
   }
 
   async expectSuccessMessage() {
-    await expect(this.successMessageTitle).toBeVisible();
-    await expect(this.successMessageBody).toBeVisible();
+    await test.step("Check form submitted success message is visible", async () => {
+      await expect(this.successMessageTitle).toBeVisible();
+      await expect(this.successMessageBody).toBeVisible();
+    });
+  }
+
+  async expectRequiredFieldsMessage() {
+    await test.step("Check required fields message is visible", async () => {
+      await expect(this.nameRequiredMessage).toBeVisible();
+      await expect(this.emailRequiredMessage).toBeVisible();
+      await expect(this.passwordRequiredMessage).toBeVisible();
+      await expect(this.countryRequiredMessage).toBeVisible();
+      await expect(this.genderRequiredMessage).toBeVisible();
+    });
   }
 }

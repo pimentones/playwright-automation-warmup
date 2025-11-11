@@ -13,16 +13,8 @@ test.describe("Authentication tests", { tag: "@authentication" }, () => {
   });
 
   test("Successful login", async ({ page }) => {
-    console.log("Current URL:", page.url());
-    console.log("BASE_URL:", process.env.BASE_URL);
-
     const login = new LoginPage(page);
-
-    const usernameVisible = await login.usernameInput
-      .isVisible()
-      .catch(() => false);
-    console.log("Username field visible:", usernameVisible);
-
+    await page.goto(process.env.BASE_URL + "/login");
     await login.fillUsername(LOGIN_USERS.validUser.username);
     await login.fillPassword(LOGIN_USERS.validUser.password);
     await login.login();
