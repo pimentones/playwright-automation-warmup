@@ -1,12 +1,15 @@
-import { expect, test } from "@playwright/test";
+import { test } from "@playwright/test";
+import { BasePage } from "./base.page";
 import {
   MENU_LINKS,
   PAGE_ELEMENT_TEXTS,
   PAGE_INTRO_TEXTS,
 } from "../data/menu.data";
 
-export class MenuPage {
+export class MenuPage extends BasePage {
   constructor(page) {
+    super(page);
+
     this.page = page;
     this.homeLink = page.getByRole("link", { name: MENU_LINKS.home });
     this.loginLink = page.getByRole("link", { name: MENU_LINKS.login });
@@ -27,87 +30,87 @@ export class MenuPage {
     });
   }
 
-  async navigateToHome() {
+  async clickHome() {
     await test.step("Navigate to home page", async () => {
-      await this.homeLink.click();
+      await this.click(this.homeLink);
     });
   }
 
-  async navigateToLogin() {
+  async clickLogin() {
     await test.step("Navigate to login page", async () => {
-      await this.loginLink.click();
+      await this.click(this.loginLink);
     });
   }
 
-  async navigateToForm() {
+  async clickForm() {
     await test.step("Navigate to form page", async () => {
-      await this.formLink.click();
+      await this.click(this.formLink);
     });
   }
 
-  async navigateToTable() {
+  async clickTable() {
     await test.step("Navigate to table page", async () => {
-      await this.tableLink.click();
+      await this.click(this.tableLink);
     });
   }
 
-  async navigateToTasks() {
+  async clickTasks() {
     await test.step("Navigate to tasks page", async () => {
-      await this.tasksLink.click();
+      await this.click(this.tasksLink);
     });
   }
 
-  async navigateToStore() {
+  async clickStore() {
     await test.step("Navigate to store page", async () => {
-      await this.storeLink.click();
+      await this.click(this.storeLink);
     });
   }
 
-  async navigateToAbout() {
+  async clickAbout() {
     await test.step("Navigate to about page", async () => {
-      await this.aboutLink.click();
+      await this.click(this.aboutLink);
     });
   }
 
   async expectHomePageIntro() {
-    await test.step("Check home page intro is visible", async () => {
-      await expect(this.homePageElement).toBeVisible();
+    await test.step("Check home page element is visible", async () => {
+      await this.expectToBeVisible(this.homePageElement);
     });
   }
 
   async expectLoginPageIntro() {
-    await test.step("Check login page intro is visible", async () => {
-      await expect(this.loginPageElement).toBeVisible();
+    await test.step("Check login page element is visible", async () => {
+      await this.expectToBeVisible(this.loginPageElement);
     });
   }
 
   async expectFormPageIntro() {
-    await test.step("Check form page intro is visible", async () => {
-      await expect(this.formPageElement).toBeVisible();
+    await test.step("Check form page element is visible", async () => {
+      await this.expectToBeVisible(this.formPageElement);
     });
   }
 
   async expectTablePageIntro() {
-    await test.step("Check table page intro is visible", async () => {
-      await expect(this.tablePageElement).toBeVisible();
+    await test.step("Check table page element is visible", async () => {
+      await this.expectToBeVisible(this.tablePageElement);
     });
   }
 
   async expectTasksPageIntro() {
-    await test.step("Check tasks page intro is visible", async () => {
-      await expect(this.tasksPageElement).toBeVisible();
+    await test.step("Check tasks page element is visible", async () => {
+      await this.expectToBeVisible(this.tasksPageElement);
     });
   }
 
   async expectStorePageIntro() {
-    await test.step("Check store page intro is visible", async () => {
-      await expect(this.storePageElement).toBeVisible();
+    await test.step("Check store page element is visible", async () => {
+      await this.expectToBeVisible(this.storePageElement);
     });
   }
 
   async expectAboutPageIntro() {
-    await test.step("Check about page intro is visible", async () => {
-      await expect(this.storePageElement).toBeVisible();
+    await test.step("Check about page element is visible", async () => {
+      await this.expectToBeVisible(this.aboutPageElement);
     });
   }
 }

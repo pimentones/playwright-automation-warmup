@@ -1,34 +1,26 @@
-import test from "@playwright/test";
-import dotenv from "dotenv";
+import { test } from "@playwright/test";
 import { beforeEach } from "node:test";
-import { MenuPage } from "../pages/menu.page.js";
-
-dotenv.config();
+import { MenuPage } from "../pages/menu.page";
 
 test.describe("Menu navigation tests", { tag: "@navigation" }, () => {
-  test.beforeEach(async ({ page }) => {
-    await test.step("Navigate to login page", async () => {
-      await page.goto(process.env.BASE_URL + "/login");
-    });
-  });
-
   test("Navigate to the different website pages", async ({ page }) => {
     await test.step("Navigate to Home page", async () => {
       const menu = new MenuPage(page);
 
-      await menu.navigateToHome();
+      await menu.navigateToUrl("/");
+      await menu.clickHome();
       await menu.expectHomePageIntro();
-      await menu.navigateToLogin();
+      await menu.clickLogin();
       await menu.expectLoginPageIntro();
-      await menu.navigateToForm();
+      await menu.clickForm();
       await menu.expectFormPageIntro();
-      await menu.navigateToTable();
+      await menu.clickTable();
       await menu.expectTablePageIntro();
-      await menu.navigateToTasks();
+      await menu.clickTasks();
       await menu.expectTasksPageIntro();
-      await menu.navigateToStore();
+      await menu.clickStore();
       await menu.expectStorePageIntro();
-      await menu.navigateToAbout();
+      await menu.clickAbout();
       await menu.expectAboutPageIntro();
     });
   });

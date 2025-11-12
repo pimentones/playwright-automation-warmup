@@ -1,9 +1,11 @@
-import { expect, test } from "@playwright/test";
-import { LOGIN_MESSAGES, LOGIN_LABELS } from "../data/login.data.js";
+import { test } from "@playwright/test";
+import { BasePage } from "./base.page";
+import { LOGIN_MESSAGES, LOGIN_LABELS } from "../data/login.data";
 
-export class LoginPage {
+export class LoginPage extends BasePage {
   constructor(page) {
-    this.page = page;
+    super(page);
+
     this.header = page.getByRole("heading", { name: LOGIN_LABELS.header });
     this.usernameInput = page.getByRole("textbox", {
       name: LOGIN_LABELS.usernameInput,
@@ -29,66 +31,68 @@ export class LoginPage {
   }
 
   async navigateToLogin() {
-    await this.page.goto("/login");
+    await test.step("Navigate to login page", async () => {
+      await this.navigateToUrl("/login");
+    });
   }
 
   async fillUsername(userName) {
-    await test.step("Fill username: ${userName}", async () => {
-      await this.usernameInput.fill(userName);
+    await test.step(`Fill username: ${userName}`, async () => {
+      await this.fill(this.usernameInput, userName);
     });
   }
 
   async fillPassword(userPassword) {
     await test.step("Fill password", async () => {
-      await this.passwordInput.fill(userPassword);
+      await this.fill(this.passwordInput, userPassword);
     });
   }
 
   async login(value) {
     await test.step("Click login button", async () => {
-      await this.loginButton.click({ clickCount: value });
+      await this.click(this.loginButton, value);
     });
   }
 
   async expectLoggedinMessage() {
     await test.step("Check logged in message is visible", async () => {
-      await expect(this.loggedinMessage).toBeVisible();
+      await this.expectToBeVisible(this.loggedinMessage);
     });
   }
 
   async expectLogoutButton() {
     await test.step("Check logout button is visible", async () => {
-      await expect(this.logoutButton).toBeVisible();
+      await this.expectToBeVisible(this.logoutButton);
     });
   }
 
   async expectBlockedUserMessage() {
     await test.step("Check blocked user message is visible", async () => {
-      await expect(this.blockedUserMessage).toBeVisible();
+      await this.expectToBeVisible(this.blockedUserMessage);
     });
   }
 
   async expectLoginButton() {
     await test.step("Check login button is visible", async () => {
-      await expect(this.loginButton).toBeVisible();
+      await this.expectToBeVisible(this.loginButton);
     });
   }
 
   async expectInvalidUserMessage() {
     await test.step("Check invalid user message is visible", async () => {
-      await expect(this.invalidUserMessage).toBeVisible();
+      await this.expectToBeVisible(this.invalidUserMessage);
     });
   }
 
   async expectWrongPasswordUserMessage() {
     await test.step("Check wrong password message is visible", async () => {
-      await expect(this.wrongPasswordUserMessage).toBeVisible();
+      await this.expectToBeVisible(this.wrongPasswordUserMessage);
     });
   }
 
   async expectTemporarilyBlockedUserMessage() {
     await test.step("Check temporarily blocked message is visible", async () => {
-      await expect(this.temporarilyBlockedUserMessage).toBeVisible();
+      await this.expectToBeVisible(this.temporarilyBlockedUserMessage);
     });
   }
 }

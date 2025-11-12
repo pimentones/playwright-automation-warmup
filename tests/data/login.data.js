@@ -1,22 +1,3 @@
-export const LOGIN_USERS = {
-  validUser: {
-    username: "test",
-    password: "password123",
-  },
-  blockedUser: {
-    username: "testblock",
-    password: "password123",
-  },
-  invalidUser: {
-    username: "random_user",
-    password: "password123",
-  },
-  wrongPasswordUser: {
-    username: "test",
-    password: "pass",
-  },
-};
-
 export const LOGIN_MESSAGES = {
   success: "User test authenticated",
   blockedUser: "User blocked!",

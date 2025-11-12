@@ -1,22 +1,22 @@
 import { test } from "@playwright/test";
+import { LOGIN_USERS } from "../data/login.data";
+import { LoginPage } from "../pages/login.page";
 import dotenv from "dotenv";
-import { LOGIN_USERS } from "../data/login.data.js";
-import { LoginPage } from "../pages/login.page.js";
 
-dotenv.config();
+dotenv.config({});
 
 test.describe("Authentication tests", { tag: "@authentication" }, () => {
   test.beforeEach(async ({ page }) => {
     await test.step("Navigate to login page", async () => {
-      await page.goto(process.env.BASE_URL + "/login");
+      const login = new LoginPage(page);
+      await login.navigateToLogin();
     });
   });
 
   test("Successful login", async ({ page }) => {
     const login = new LoginPage(page);
-    await page.goto(process.env.BASE_URL + "/login");
-    await login.fillUsername(LOGIN_USERS.validUser.username);
-    await login.fillPassword(LOGIN_USERS.validUser.password);
+    await login.fillUsername(process.env.VALID_USERNAME);
+    await login.fillPassword(process.env.VALID_PASSWORD);
     await login.login();
     await login.expectLoggedinMessage();
     await login.expectLogoutButton();
@@ -24,8 +24,8 @@ test.describe("Authentication tests", { tag: "@authentication" }, () => {
 
   test("Blocked account", async ({ page }) => {
     const login = new LoginPage(page);
-    await login.fillUsername(LOGIN_USERS.blockedUser.username);
-    await login.fillPassword(LOGIN_USERS.blockedUser.password);
+    await login.fillUsername(process.env.BLOCKED_USERNAME);
+    await login.fillPassword(process.env.BLOCKED_PASSWORD);
     await login.login();
     await login.expectBlockedUserMessage();
     await login.expectLoginButton();
@@ -33,8 +33,8 @@ test.describe("Authentication tests", { tag: "@authentication" }, () => {
 
   test("Invalid user", async ({ page }) => {
     const login = new LoginPage(page);
-    await login.fillUsername(LOGIN_USERS.invalidUser.username);
-    await login.fillPassword(LOGIN_USERS.invalidUser.password);
+    await login.fillUsername(process.env.INVALID_USERNAME);
+    await login.fillPassword(process.env.INVALID_PASSWORD);
     await login.login();
     await login.expectInvalidUserMessage();
     await login.expectLoginButton();
@@ -42,8 +42,8 @@ test.describe("Authentication tests", { tag: "@authentication" }, () => {
 
   test("Wrong password", async ({ page }) => {
     const login = new LoginPage(page);
-    await login.fillUsername(LOGIN_USERS.wrongPasswordUser.username);
-    await login.fillPassword(LOGIN_USERS.wrongPasswordUser.password);
+    await login.fillUsername(process.env.WRONG_PASSWORD_USERNAME);
+    await login.fillPassword(process.env.WRONG_PASSWORD);
     await login.login();
     await login.expectWrongPasswordUserMessage();
     await login.expectLoginButton();
@@ -51,8 +51,8 @@ test.describe("Authentication tests", { tag: "@authentication" }, () => {
 
   test("Wrong password 3 times ", async ({ page }) => {
     const login = new LoginPage(page);
-    await login.fillUsername(LOGIN_USERS.wrongPasswordUser.username);
-    await login.fillPassword(LOGIN_USERS.wrongPasswordUser.password);
+    await login.fillUsername(process.env.WRONG_PASSWORD_USERNAME);
+    await login.fillPassword(process.env.WRONG_PASSWORD);
     await login.login(3);
     await login.expectTemporarilyBlockedUserMessage();
     await login.expectLoginButton();

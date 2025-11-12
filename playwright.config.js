@@ -11,7 +11,7 @@ import dotenv from "dotenv";
 // import path from "path";
 // dotenv.config({ path: path.resolve(__dirname, ".env") });
 
-dotenv.config({ quiet: true });
+dotenv.config({});
 
 /**
  * @see https://playwright.dev/docs/test-configuration
