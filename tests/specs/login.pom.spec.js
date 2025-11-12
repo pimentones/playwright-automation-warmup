@@ -24,8 +24,8 @@ test.describe("Authentication tests", { tag: "@authentication" }, () => {
 
   test("Blocked account", async ({ page }) => {
     const login = new LoginPage(page);
-    await login.fillUsername(process.env.BLOCKED_USERNAME);
-    await login.fillPassword(process.env.BLOCKED_PASSWORD);
+    await login.fillUsername(LOGIN_USERS.blockedUser.username);
+    await login.fillPassword(LOGIN_USERS.blockedUser.password);
     await login.login();
     await login.expectBlockedUserMessage();
     await login.expectLoginButton();
@@ -33,8 +33,8 @@ test.describe("Authentication tests", { tag: "@authentication" }, () => {
 
   test("Invalid user", async ({ page }) => {
     const login = new LoginPage(page);
-    await login.fillUsername(process.env.INVALID_USERNAME);
-    await login.fillPassword(process.env.INVALID_PASSWORD);
+    await login.fillUsername(LOGIN_USERS.invalidUser.username);
+    await login.fillPassword(LOGIN_USERS.invalidUser.password);
     await login.login();
     await login.expectInvalidUserMessage();
     await login.expectLoginButton();
@@ -42,8 +42,8 @@ test.describe("Authentication tests", { tag: "@authentication" }, () => {
 
   test("Wrong password", async ({ page }) => {
     const login = new LoginPage(page);
-    await login.fillUsername(process.env.WRONG_PASSWORD_USERNAME);
-    await login.fillPassword(process.env.WRONG_PASSWORD);
+    await login.fillUsername(LOGIN_USERS.wrongPasswordUser.username);
+    await login.fillPassword(LOGIN_USERS.wrongPasswordUser.password);
     await login.login();
     await login.expectWrongPasswordUserMessage();
     await login.expectLoginButton();
@@ -51,8 +51,8 @@ test.describe("Authentication tests", { tag: "@authentication" }, () => {
 
   test("Wrong password 3 times ", async ({ page }) => {
     const login = new LoginPage(page);
-    await login.fillUsername(process.env.WRONG_PASSWORD_USERNAME);
-    await login.fillPassword(process.env.WRONG_PASSWORD);
+    await login.fillUsername(LOGIN_USERS.wrongPasswordUser.username);
+    await login.fillPassword(LOGIN_USERS.wrongPasswordUser.password);
     await login.login(3);
     await login.expectTemporarilyBlockedUserMessage();
     await login.expectLoginButton();
