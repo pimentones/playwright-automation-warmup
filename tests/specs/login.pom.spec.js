@@ -1,21 +1,22 @@
 import { test } from "@playwright/test";
+import { LOGIN_USERS } from "../data/login.data";
+import { LoginPage } from "../pages/login.page";
 import dotenv from "dotenv";
-import { LOGIN_USERS } from "../data/login.data.js";
-import { LoginPage } from "../pages/login.page.js";
 
-dotenv.config();
+dotenv.config({});
 
 test.describe("Authentication tests", { tag: "@authentication" }, () => {
   test.beforeEach(async ({ page }) => {
     await test.step("Navigate to login page", async () => {
-      await page.goto(process.env.BASE_URL + "/login");
+      const login = new LoginPage(page);
+      await login.navigateToLogin();
     });
   });
 
   test("Successful login", async ({ page }) => {
     const login = new LoginPage(page);
-    await login.fillUsername(LOGIN_USERS.validUser.username);
-    await login.fillPassword(LOGIN_USERS.validUser.password);
+    await login.fillUsername(process.env.VALID_USERNAME);
+    await login.fillPassword(process.env.VALID_PASSWORD);
     await login.login();
     await login.expectLoggedinMessage();
     await login.expectLogoutButton();

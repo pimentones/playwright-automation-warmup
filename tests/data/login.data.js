@@ -1,7 +1,7 @@
 export const LOGIN_USERS = {
   validUser: {
-    username: "test",
-    password: "password123",
+    username: process.env.VALID_USERNAME,
+    password: process.env.VALID_PASSWORD,
   },
   blockedUser: {
     username: "testblock",
@@ -13,7 +13,7 @@ export const LOGIN_USERS = {
   },
   wrongPasswordUser: {
     username: "test",
-    password: "pass",
+    password: "wrong_pass",
   },
 };
 

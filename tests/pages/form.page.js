@@ -1,9 +1,10 @@
-import { expect } from "@playwright/test";
+import { test } from "@playwright/test";
+import { BasePage } from "./base.page";
 import { ERROR_MESSAGES, FORM_LABELS, FORM_MESSAGES } from "../data/form.data";
 
-export class FormPage {
+export class FormPage extends BasePage {
   constructor(page) {
-    this.page = page;
+    super(page);
 
     // Form elements
     this.header = page.getByRole("heading", { name: FORM_LABELS.header });
@@ -33,43 +34,71 @@ export class FormPage {
   }
 
   async navigateToForm() {
-    await this.page.goto("/form");
+    await test.step("Navigate to login page", async () => {
+      await this.navigateToUrl("/form");
+    });
   }
 
   async fillName(userName) {
-    await this.nameInput.fill(login);
+    await test.step(`Fill username: ${userName}`, async () => {
+      await this.fill(this.nameInput, userName);
+    });
   }
 
   async fillEmail(userEmail) {
-    await this.emailInput.fill(userEmail);
+    await test.step(`Fill email: ${userEmail}`, async () => {
+      await this.fill(this.emailInput, userEmail);
+    });
   }
 
   async fillPassword(userPassword) {
-    await this.passwordInput.fill(userPassword);
+    await test.step("Fill password", async () => {
+      await this.fill(this.passwordInput, userPassword);
+    });
   }
 
   async selectCountry(userCountry) {
-    await this.countrySelect.selectOption(userCountry);
+    await test.step(`Select country: ${userCountry}`, async () => {
+      await this.selectOption(this.countrySelect, userCountry);
+    });
   }
 
   async selectGender(userGender) {
-    await this.genderCheck(userGender).check();
+    await test.step(`Select gender: ${userGender}`, async () => {
+      await this.check(this.genderCheck(userGender));
+    });
   }
 
   async selectHobby(userHobbies) {
-    if (userHobbies.length > 0) {
-      for (const hobby of userHobbies) {
-        await this.hobbyCheck(hobby).check();
+    await test.step(`Select hobbies: ${userHobbies.join(", ")}`, async () => {
+      if (userHobbies.length > 0) {
+        for (const hobby of userHobbies) {
+          await this.check(this.hobbyCheck(hobby));
+        }
       }
-    }
+    });
   }
 
-  async submitForm() {
-    await this.sendButton.click();
+  async clickSend(value) {
+    await test.step("Submit form", async () => {
+      await this.click(this.sendButton, value);
+    });
   }
 
   async expectSuccessMessage() {
-    await expect(this.successMessageTitle).toBeVisible();
-    await expect(this.successMessageBody).toBeVisible();
+    await test.step("Check form submitted success message is visible", async () => {
+      await this.expectToBeVisible(this.successMessageTitle);
+      await this.expectToBeVisible(this.successMessageBody);
+    });
+  }
+
+  async expectRequiredFieldsMessage() {
+    await test.step("Check required fields message is visible", async () => {
+      await this.expectToBeVisible(this.nameRequiredMessage);
+      await this.expectToBeVisible(this.emailRequiredMessage);
+      await this.expectToBeVisible(this.passwordRequiredMessage);
+      await this.expectToBeVisible(this.countryRequiredMessage);
+      await this.expectToBeVisible(this.genderRequiredMessage);
+    });
   }
 }
