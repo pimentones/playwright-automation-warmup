@@ -17,8 +17,6 @@ for (const character of hpCharacters) {
       const birth = character.dateOfBirth ? character.dateOfBirth : "Unknown";
       await login.expectDateOfBirth(birth);
       await login.expectActor(actorWithoutSpace);
-
-      console.log(hpCharacters);
     }
   );
 }
