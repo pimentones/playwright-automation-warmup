@@ -1,59 +1,38 @@
-import { expect } from "@playwright/test";
-import { LOGIN_MESSAGES, LOGIN_LABELS } from "../data/login.data.js";
+import { BasePage } from "./base.page.js";
 
-export class TablePage {
+export class TablePage extends BasePage {
   constructor(page) {
-    this.page = page;
-    this.image = (image) => page.getByRole("img", { name: image });
+    super(page);
+
     this.name = (name) => page.locator("#tableCharacterName" + name);
     this.house = (house) => page.locator("#tableCharacterHouse" + house);
+    this.image = (image) => page.getByRole("img", { name: image });
     this.dateOfBirth = (dateOfBirth) =>
       page.getByRole("cell", { name: dateOfBirth });
-    this.actor = (actor) => page.locator("#tableCharacterActor" + actor);
-
-    // await expect(
-    //   page.locator("#tableCharacterName" + nameWithoutSpace)
-    // ).toBeVisible();
-
-    // await expect(page.getByRole("img", { name: c.name })).toBeVisible();
-
-    // await expect(
-    //   page.locator("#tableCharacterHouse" + nameWithoutSpace)
-    // ).toHaveText(c.house);
-
-    // if (c.dateOfBirth) {
-    //   await expect(
-    //     page.getByRole("cell", { name: c.dateOfBirth })
-    //   ).toBeVisible();
-    // } else {
-    //   await expect(page.getByRole("cell", { name: "Unknown" })).toBeVisible();
-    // }
-
-    // const birth = c.dateOfBirth ? c.dateOfBirth : "Unknown";
-    // await expect(page.getByRole("cell", { name: birth })).toBeVisible();
+    this.actor = (actor) => page.getByRole("cell", { name: actor });
   }
 
   async navigateToTable() {
-    await this.page.goto("/table");
+    await this.navigateToUrl("/table");
   }
 
   async expectName(name) {
-    await expect(this.name(name)).toBeVisible();
+    await this.expectToBeVisible(this.name(name));
   }
 
   async expectHouse(house) {
-    await expect(this.house(house)).toBeVisible();
+    await this.expectToBeVisible(this.house(house));
   }
 
   async expectImage(image) {
-    await expect(this.image(image)).toBeVisible();
+    await this.expectToBeVisible(this.image(image));
   }
 
   async expectDateOfBirth(dateOfBirth) {
-    await expect(this.dateOfBirth(dateOfBirth)).toBeVisible();
+    await this.expectToBeVisible(this.dateOfBirth(dateOfBirth));
   }
 
   async expectActor(actor) {
-    await expect(this.actor(actor)).toBeVisible();
+    await this.expectToBeVisible(this.actor(actor));
   }
 }
